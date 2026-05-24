@@ -10,13 +10,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Pull Plane image
+      - name: Pull Plane image from GHCR
         run: |
-          docker pull makeplane/plane-aio-community:latest
+          docker pull ghcr.io/makeplane/plane-aio-community:latest
 
       - name: Save image to tar
         run: |
-          docker save makeplane/plane-aio-community:latest -o plane-aio-community.tar
+          docker save ghcr.io/makeplane/plane-aio-community:latest -o plane-aio-community.tar
 
       - name: Compress tar file
         run: |
