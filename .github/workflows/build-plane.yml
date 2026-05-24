@@ -1,0 +1,30 @@
+name: Build and Package Plane Docker Image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Pull Plane image
+        run: |
+          docker pull makeplane/plane-aio-community:latest
+
+      - name: Save image to tar
+        run: |
+          docker save makeplane/plane-aio-community:latest -o plane-aio-community.tar
+
+      - name: Compress tar file
+        run: |
+          gzip -c plane-aio-community.tar > plane-aio-community.tar.gz
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: plane-docker-image
+          path: plane-aio-community.tar.gz
+          retention-days: 3
